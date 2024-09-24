@@ -1,2 +1,8 @@
 <h1>Chat</h1>
+@if(isUserLogin){
+<h1>{{ userName }}</h1>
+} @if (isUserLogin) {
+<button mat-fab extended class="button">Logout</button>
+}@else {
 <button mat-fab extended class="button">Login</button>
+}
