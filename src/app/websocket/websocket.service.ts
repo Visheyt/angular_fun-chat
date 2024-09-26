@@ -22,11 +22,17 @@ export class WebsocketService {
     });
   }
 
-  public auth(login: string, password: string) {
+  public login(login: string, password: string) {
     const message = createMessage('USER_LOGIN', {
       user: { login, password },
     });
-    console.log(message);
+
+    this.socket.next(message);
+  }
+  public logout(login: string, password: string) {
+    const message = createMessage('USER_LOGOUT', {
+      user: { login, password },
+    });
     this.socket.next(message);
   }
 

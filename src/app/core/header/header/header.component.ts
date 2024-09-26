@@ -2,31 +2,40 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Store } from '@ngrx/store';
 import {
+  selectUser,
   selectUserName,
   selectUserStatus,
 } from '../../../store/selectors/user.selector';
-import { Subscription } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { WebsocketService } from '../../../websocket/websocket.service';
+import { userActions } from '../../../store/actions/user.action';
+
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, RouterLink],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   private store = inject(Store);
 
-  public isUserLogin: boolean = false;
+  private socketService = inject(WebsocketService);
 
-  public userName: string = '';
+  protected user = {
+    login: '',
+    isUserLogin: false,
+    password: '',
+  };
 
   constructor() {
-    this.store.select(selectUserStatus).subscribe((status) => {
-      this.isUserLogin = status;
+    this.store.select(selectUser).subscribe((user) => {
+      this.user = user;
     });
-    this.store.select(selectUserName).subscribe((userName) => {
-      this.userName = userName;
-    });
+  }
+  public logout() {
+    this.socketService.logout(this.user.login, this.user.password);
+    this.store.dispatch(userActions.logout());
   }
 
   ngOnDestroy(): void {}

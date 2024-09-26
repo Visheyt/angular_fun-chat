@@ -5,4 +5,5 @@ export interface AppState {
 export interface UserState {
   login: string;
   isUserLogin: boolean;
+  password: string;
 }

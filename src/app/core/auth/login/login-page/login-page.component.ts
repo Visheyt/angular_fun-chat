@@ -34,13 +34,18 @@ export class LoginPageComponent {
   constructor() {
     this.socket.onMessage<userMessageResponse>().subscribe((message) => {
       if (message.type === 'USER_LOGIN') {
-        this.store.dispatch(userActions.login(message.payload.user));
+        this.store.dispatch(
+          userActions.login({
+            login: message.payload.user.login,
+            password: this.form.getRawValue().password,
+          })
+        );
       }
     });
   }
 
   public onSubmit() {
-    this.socket.auth(
+    this.socket.login(
       this.form.getRawValue().login,
       this.form.getRawValue().password
     );
