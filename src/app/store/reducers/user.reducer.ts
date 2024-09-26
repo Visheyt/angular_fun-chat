@@ -1,6 +1,6 @@
 import { createReducer, on, props } from '@ngrx/store';
 import { userActions } from '../actions/user.action';
-import { UserState } from '../interfaces/user.interface';
+import { UserState } from '../interfaces/store.interface';
 
 export const initialState: UserState = {
   login: '',

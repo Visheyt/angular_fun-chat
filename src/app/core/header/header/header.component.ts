@@ -9,6 +9,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { WebsocketService } from '../../../websocket/websocket.service';
 import { userActions } from '../../../store/actions/user.action';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -28,15 +29,21 @@ export class HeaderComponent {
     password: '',
   };
 
+  private subscriptions = new Subscription();
+
   constructor() {
-    this.store.select(selectUser).subscribe((user) => {
+    const subscription = this.store.select(selectUser).subscribe((user) => {
       this.user = user;
     });
+
+    this.subscriptions.add(subscription);
   }
   public logout() {
     this.socketService.logout(this.user.login, this.user.password);
     this.store.dispatch(userActions.logout());
   }
 
-  ngOnDestroy(): void {}
+  public ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
 }

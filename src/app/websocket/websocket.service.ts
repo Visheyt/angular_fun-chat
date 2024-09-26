@@ -36,6 +36,16 @@ export class WebsocketService {
     this.socket.next(message);
   }
 
+  public getActiveUsers() {
+    const message = createMessage('USER_ACTIVE', {});
+    this.socket.next(message);
+  }
+
+  public getInActiveUsers() {
+    const message = createMessage('USER_INACTIVE', {});
+    this.socket.next(message);
+  }
+
   public onMessage<T>(): Observable<T> {
     return this.socket.asObservable();
   }

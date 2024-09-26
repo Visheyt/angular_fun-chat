@@ -11,6 +11,8 @@ import { WebsocketService } from '../../../../websocket/websocket.service';
 import { Store } from '@ngrx/store';
 import { userActions } from '../../../../store/actions/user.action';
 import { userMessageResponse } from '../../../../websocket/model/message.interface';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login-page',
@@ -22,9 +24,13 @@ import { userMessageResponse } from '../../../../websocket/model/message.interfa
 export class LoginPageComponent {
   private fb = inject(NonNullableFormBuilder);
 
+  private router = inject(Router);
+
   private store = inject(Store);
 
   private socket = inject(WebsocketService);
+
+  private subscriptions = new Subscription();
 
   public form = this.fb.group({
     login: ['', Validators.required],
@@ -32,16 +38,20 @@ export class LoginPageComponent {
   });
 
   constructor() {
-    this.socket.onMessage<userMessageResponse>().subscribe((message) => {
-      if (message.type === 'USER_LOGIN') {
-        this.store.dispatch(
-          userActions.login({
-            login: message.payload.user.login,
-            password: this.form.getRawValue().password,
-          })
-        );
-      }
-    });
+    const subscription = this.socket
+      .onMessage<userMessageResponse>()
+      .subscribe((message) => {
+        if (message.type === 'USER_LOGIN') {
+          this.store.dispatch(
+            userActions.login({
+              login: message.payload.user.login,
+              password: this.form.getRawValue().password,
+            })
+          );
+          this.router.navigate(['main']);
+        }
+      });
+    this.subscriptions.add(subscription);
   }
 
   public onSubmit() {
@@ -49,5 +59,9 @@ export class LoginPageComponent {
       this.form.getRawValue().login,
       this.form.getRawValue().password
     );
+  }
+
+  public ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }
