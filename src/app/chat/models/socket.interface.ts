@@ -8,5 +8,5 @@ export interface usersListResponse extends wsResponse {
 
 export interface User {
   login: string;
-  isUserLogin: string;
+  isLogined: boolean;
 }

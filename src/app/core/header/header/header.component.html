@@ -4,8 +4,7 @@
 } @if (user.isUserLogin) {
 <button mat-fab extended class="button" (click)="logout()">Logout</button>
 }@else {
-<a [routerLink]="['/login']"
-  ><button mat-fab extended class="button">Login</button></a
->
-
+<a [routerLink]="['/login']">
+  <button mat-fab extended class="button">Login</button>
+</a>
 }

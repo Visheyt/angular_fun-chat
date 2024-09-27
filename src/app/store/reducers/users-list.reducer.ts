@@ -12,10 +12,14 @@ export const usersListReducer = createReducer(
   initialState,
   on(usersListActions.activeUsers, (state, { users }) => ({
     ...state,
-    activeUsers: [...state.activeUsers, ...users],
+    activeUsers: users,
   })),
   on(usersListActions.inactiveUsers, (state, { users }) => ({
     ...state,
-    inactiveUsers: [...state.inactiveUsers, ...users],
+    inactiveUsers: users,
+  })),
+  on(usersListActions.disconnectUser, (state, { login }) => ({
+    ...state,
+    activeUsers: state.activeUsers.filter((user) => user.login !== login),
   }))
 );

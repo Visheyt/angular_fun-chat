@@ -6,10 +6,12 @@ import {
   selectUserName,
   selectUserStatus,
 } from '../../../store/selectors/user.selector';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { WebsocketService } from '../../../websocket/websocket.service';
 import { userActions } from '../../../store/actions/user.action';
 import { Subscription } from 'rxjs';
+import { userMessageResponse } from '../../../websocket/model/message.interface';
+import { usersListActions } from '../../../store/actions/users-list.action';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +25,8 @@ export class HeaderComponent {
 
   private socketService = inject(WebsocketService);
 
+  private router = inject(Router);
+
   protected user = {
     login: '',
     isUserLogin: false,
@@ -32,15 +36,30 @@ export class HeaderComponent {
   private subscriptions = new Subscription();
 
   constructor() {
-    const subscription = this.store.select(selectUser).subscribe((user) => {
-      this.user = user;
-    });
+    this.subscriptions.add(
+      this.store.select(selectUser).subscribe((user) => {
+        this.user = user;
+      })
+    );
 
-    this.subscriptions.add(subscription);
+    this.subscriptions.add(
+      this.socketService
+        .onMessage<userMessageResponse>()
+        .subscribe((message) => {
+          if (message.type === 'USER_LOGOUT') {
+            this.store.dispatch(userActions.logout());
+            this.store.dispatch(
+              usersListActions.disconnectUser({
+                login: message.payload.user.login,
+              })
+            );
+          }
+        })
+    );
   }
   public logout() {
     this.socketService.logout(this.user.login, this.user.password);
-    this.store.dispatch(userActions.logout());
+    this.router.navigate(['login']);
   }
 
   public ngOnDestroy() {

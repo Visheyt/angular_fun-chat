@@ -8,11 +8,14 @@ import {
   selectInactiveUsers,
 } from '../../../store/selectors/users-list.selector';
 import { Subscription } from 'rxjs';
+import { UserComponent } from '../user/user.component';
+import { userActions } from '../../../store/actions/user.action';
+import { selectUserName } from '../../../store/selectors/user.selector';
 
 @Component({
   selector: 'app-users-list',
   standalone: true,
-  imports: [],
+  imports: [UserComponent],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.scss',
 })
@@ -26,6 +29,8 @@ export class UsersListComponent {
   protected inactiveUsers: User[] = [];
 
   private subscriptions = new Subscription();
+
+  protected currentUserName: string = '';
 
   constructor() {
     this.getUsers();
@@ -49,13 +54,18 @@ export class UsersListComponent {
     this.subscriptions.add(
       this.store.select(selectActiveUsers).subscribe((activeUsers) => {
         this.activeUsers = activeUsers;
-        console.log(this.activeUsers);
       })
     );
 
     this.subscriptions.add(
       this.store.select(selectInactiveUsers).subscribe((inactiveUsers) => {
         this.inactiveUsers = inactiveUsers;
+      })
+    );
+
+    this.subscriptions.add(
+      this.store.select(selectUserName).subscribe((userName) => {
+        this.currentUserName = userName;
       })
     );
   }
