@@ -1,0 +1,37 @@
+:host {
+  flex: 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+.messages__header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(184, 184, 184);
+  padding: 5px;
+  align-items: center;
+}
+h6 {
+  margin: 0px;
+}
+.messages__content {
+  flex: 1 auto;
+}
+.message__form {
+  display: flex;
+  gap: 10px;
+  padding: 1.5px;
+  align-items: center;
+  height: 50px;
+  border-top: 1px solid rgb(199, 199, 199);
+}
+.message__input {
+  flex: 1 auto;
+  padding-left: 10px;
+  border: 0px;
+  height: 100%;
+}
+
+.message__submit {
+  margin-right: 10px;
+  height: 35px;
+}
