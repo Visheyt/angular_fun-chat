@@ -2,13 +2,16 @@
   flex: 1 auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .messages__header {
   display: flex;
+  width: calc(100% - 10px);
   justify-content: space-between;
   border-bottom: 1px solid rgb(184, 184, 184);
-  padding: 5px;
   align-items: center;
+  padding: 5px;
 }
 h6 {
   margin: 0px;
@@ -17,6 +20,7 @@ h6 {
   flex: 1 auto;
 }
 .message__form {
+  width: calc(100% - 3px);
   display: flex;
   gap: 10px;
   padding: 1.5px;

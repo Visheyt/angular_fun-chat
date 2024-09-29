@@ -1,7 +1,8 @@
+@if(chat.isOpen){
 <header class="messages__header">
-  <button mat-button>Close</button>
-  <h6>{{ contactName() }}</h6>
-  <div>Online</div>
+  <button mat-button (click)="closeChat()">Close</button>
+  <h6>{{ chat.contactName }}</h6>
+  <div>{{ chat.isOnline ? "Online " : "Offline" }}</div>
 </header>
 <div class="messages__content"></div>
 <form [formGroup]="form" class="message__form">
@@ -10,3 +11,6 @@
     <mat-icon>send</mat-icon>
   </button>
 </form>
+} @else {
+<h4>Select a chat to start messaging</h4>
+}
