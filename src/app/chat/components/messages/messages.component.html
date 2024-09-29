@@ -6,5 +6,7 @@
 <div class="messages__content"></div>
 <form [formGroup]="form" class="message__form">
   <input type="text" placeholder="Enter your message" class="message__input" />
-  <button type="submit" mat-flat-button class="message__submit">Send</button>
+  <button type="submit" mat-fab class="message__submit">
+    <mat-icon>send</mat-icon>
+  </button>
 </form>

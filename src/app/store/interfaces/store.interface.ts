@@ -3,6 +3,7 @@ import { User } from '../../chat/models/socket.interface';
 export interface AppState {
   userState: UserState;
   usersListState: UsersListState;
+  chatState: ChatState;
 }
 
 export interface UserState {
@@ -14,4 +15,9 @@ export interface UserState {
 export interface UsersListState {
   activeUsers: User[];
   inactiveUsers: User[];
+}
+
+export interface ChatState {
+  isOpen: boolean;
+  contactName: string;
 }
