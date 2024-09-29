@@ -46,6 +46,24 @@ export class WebsocketService {
     this.socket.next(message);
   }
 
+  public sendMessage(to: string, text: string) {
+    const message = createMessage('MSG_SEND', {
+      message: {
+        to,
+        text,
+      },
+    });
+    this.socket.next(message);
+  }
+
+  public getMessages(login: string) {
+    const message = createMessage('MSG_FROM_USER', {
+      user: {
+        login,
+      },
+    });
+    this.socket.next(message);
+  }
   public onMessage<T>(): Observable<T> {
     return this.socket.asObservable();
   }

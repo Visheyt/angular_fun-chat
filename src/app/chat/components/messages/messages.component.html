@@ -5,8 +5,13 @@
   <div>{{ chat.isOnline ? "Online " : "Offline" }}</div>
 </header>
 <div class="messages__content"></div>
-<form [formGroup]="form" class="message__form">
-  <input type="text" placeholder="Enter your message" class="message__input" />
+<form [formGroup]="form" class="message__form" (submit)="onSubmit()">
+  <input
+    type="text"
+    placeholder="Enter your message"
+    class="message__input"
+    formControlName="text"
+  />
   <button type="submit" mat-fab class="message__submit">
     <mat-icon>send</mat-icon>
   </button>

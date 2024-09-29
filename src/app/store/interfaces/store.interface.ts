@@ -1,4 +1,4 @@
-import { User } from '../../chat/models/socket.interface';
+import { Message, User } from '../../chat/models/socket.interface';
 
 export interface AppState {
   userState: UserState;
@@ -21,4 +21,5 @@ export interface ChatState {
   isOpen: boolean;
   contactName: string;
   isOnline: boolean;
+  messages: Message[];
 }

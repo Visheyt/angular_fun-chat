@@ -12,6 +12,9 @@ import { Store } from '@ngrx/store';
 import { chatActions } from '../../../store/actions/chat.action';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { selectChat } from '../../../store/selectors/chat.selector';
+import { ChatService } from '../../services/chat.service';
+import { WebsocketService } from '../../../websocket/websocket.service';
+import { messagesListResponse } from '../../models/socket.interface';
 
 @Component({
   selector: 'app-messages',
@@ -32,8 +35,14 @@ export class MessagesComponent {
 
   private store = inject(Store);
 
+  private chatService = inject(ChatService);
+
+  private wsService = inject(WebsocketService);
+
+  private subscription = new Subscription();
+
   public form = this.fb.group({
-    message: ['', Validators.required],
+    text: ['', Validators.required],
   });
 
   public chat = {
@@ -42,12 +51,19 @@ export class MessagesComponent {
     isOnline: false,
   };
 
-  private subscription = new Subscription();
-
   constructor() {
     this.subscription.add(
       this.store.select(selectChat).subscribe((chat) => {
         this.chat = chat;
+      })
+    );
+    this.subscription.add(
+      this.wsService.onMessage<messagesListResponse>().subscribe((message) => {
+        if (message.type === 'MSG_FROM_USER') {
+          this.store.dispatch(
+            chatActions.addMessages({ messages: message.payload.messages })
+          );
+        }
       })
     );
   }
@@ -55,6 +71,15 @@ export class MessagesComponent {
   public closeChat() {
     this.store.dispatch(chatActions.close());
   }
+
+  public onSubmit() {
+    this.chatService.sendMessage(
+      this.chat.contactName,
+      this.form.getRawValue().text
+    );
+    this.form.reset();
+  }
+
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

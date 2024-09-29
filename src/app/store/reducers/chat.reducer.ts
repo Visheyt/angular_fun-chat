@@ -6,6 +6,7 @@ export const initialState: ChatState = {
   isOpen: false,
   contactName: '',
   isOnline: false,
+  messages: [],
 };
 
 export const chatReducer = createReducer(
@@ -21,5 +22,9 @@ export const chatReducer = createReducer(
     isOpen: false,
     contactName: '',
     isOnline: false,
+  })),
+  on(chatActions.addMessages, (state, { messages }) => ({
+    ...state,
+    messages,
   }))
 );
