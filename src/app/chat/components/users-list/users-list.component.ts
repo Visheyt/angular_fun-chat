@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { UserComponent } from '../user/user.component';
 import { userActions } from '../../../store/actions/user.action';
 import { selectUserName } from '../../../store/selectors/user.selector';
+import { chatActions } from '../../../store/actions/chat.action';
 
 @Component({
   selector: 'app-users-list',
@@ -73,6 +74,10 @@ export class UsersListComponent {
   private getUsers() {
     this.socketService.getActiveUsers();
     this.socketService.getInActiveUsers();
+  }
+
+  public openChat(contactName: string, isOnline: boolean) {
+    this.store.dispatch(chatActions.open({ contactName, isOnline }));
   }
 
   ngOnDestroy(): void {

@@ -20,4 +20,5 @@ export interface UsersListState {
 export interface ChatState {
   isOpen: boolean;
   contactName: string;
+  isOnline: boolean;
 }

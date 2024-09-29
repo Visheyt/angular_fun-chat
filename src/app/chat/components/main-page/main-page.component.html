@@ -1,2 +1,4 @@
-<app-users-list></app-users-list>
-<app-messages></app-messages>
+<app-users-list />
+@if(isChatOpen){
+<app-messages [contactName]="contactName" />
+}

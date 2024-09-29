@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
@@ -25,6 +25,8 @@ import { MatInputModule } from '@angular/material/input';
 })
 export class MessagesComponent {
   private fb = inject(NonNullableFormBuilder);
+
+  public contactName = input.required<string>();
 
   public form = this.fb.group({
     message: ['', Validators.required],
