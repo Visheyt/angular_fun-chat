@@ -38,9 +38,8 @@ export class LoginPageComponent {
   });
 
   constructor() {
-    const subscription = this.socket
-      .onMessage<userMessageResponse>()
-      .subscribe((message) => {
+    this.subscriptions.add(
+      this.socket.onMessage<userMessageResponse>().subscribe((message) => {
         if (message.type === 'USER_LOGIN') {
           this.store.dispatch(
             userActions.login({
@@ -50,8 +49,8 @@ export class LoginPageComponent {
           );
           this.router.navigate(['main']);
         }
-      });
-    this.subscriptions.add(subscription);
+      })
+    );
   }
 
   public onSubmit() {

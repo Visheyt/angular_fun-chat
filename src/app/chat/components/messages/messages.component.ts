@@ -11,10 +11,14 @@ import { MatInputModule } from '@angular/material/input';
 import { Store } from '@ngrx/store';
 import { chatActions } from '../../../store/actions/chat.action';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { selectChat } from '../../../store/selectors/chat.selector';
+import {
+  selectChat,
+  selectMessages,
+} from '../../../store/selectors/chat.selector';
 import { ChatService } from '../../services/chat.service';
 import { WebsocketService } from '../../../websocket/websocket.service';
-import { messagesListResponse } from '../../models/socket.interface';
+import { Message, messagesListResponse } from '../../models/socket.interface';
+import { MessageComponent } from '../message/message.component';
 
 @Component({
   selector: 'app-messages',
@@ -26,6 +30,7 @@ import { messagesListResponse } from '../../models/socket.interface';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MessageComponent,
   ],
   templateUrl: './messages.component.html',
   styleUrl: './messages.component.scss',
@@ -40,6 +45,8 @@ export class MessagesComponent {
   private wsService = inject(WebsocketService);
 
   private subscription = new Subscription();
+
+  public messages: Message[] = [];
 
   public form = this.fb.group({
     text: ['', Validators.required],
@@ -64,6 +71,11 @@ export class MessagesComponent {
             chatActions.addMessages({ messages: message.payload.messages })
           );
         }
+      })
+    );
+    this.subscription.add(
+      this.store.select(selectMessages).subscribe((messages) => {
+        this.messages = messages;
       })
     );
   }

@@ -4,7 +4,11 @@
   <h6>{{ chat.contactName }}</h6>
   <div>{{ chat.isOnline ? "Online " : "Offline" }}</div>
 </header>
-<div class="messages__content"></div>
+<div class="messages__content">
+  @for (message of messages; track $index) {
+  <app-message [message]="message" />
+  }
+</div>
 <form [formGroup]="form" class="message__form" (submit)="onSubmit()">
   <input
     type="text"

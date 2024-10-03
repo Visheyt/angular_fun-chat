@@ -28,3 +28,9 @@ export interface Message {
     isEdited: boolean;
   };
 }
+
+export interface userExternalLogin extends wsResponse {
+  payload: {
+    user: User;
+  };
+}

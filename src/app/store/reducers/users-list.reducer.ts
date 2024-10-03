@@ -21,5 +21,30 @@ export const usersListReducer = createReducer(
   on(usersListActions.disconnectUser, (state, { login }) => ({
     ...state,
     activeUsers: state.activeUsers.filter((user) => user.login !== login),
-  }))
+  })),
+  on(usersListActions.addActiveUser, (state, { login }) => {
+    const isActive = state.activeUsers.some((user) => user.login === login);
+    const isInactive = state.inactiveUsers.some((user) => user.login === login);
+
+    return {
+      ...state,
+      activeUsers: isActive
+        ? state.activeUsers
+        : [...state.activeUsers, { login, isLogined: true }],
+      inactiveUsers: isInactive
+        ? state.inactiveUsers.filter((user) => user.login !== login)
+        : state.inactiveUsers,
+    };
+  }),
+  on(usersListActions.addInactiveUser, (state, { login }) => {
+    const isInactive = state.inactiveUsers.some((user) => user.login === login);
+
+    return {
+      ...state,
+      activeUsers: state.activeUsers.filter((user) => user.login !== login),
+      inactiveUsers: isInactive
+        ? state.inactiveUsers
+        : [...state.inactiveUsers, { login, isLogined: false }],
+    };
+  })
 );

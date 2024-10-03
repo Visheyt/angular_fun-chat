@@ -1,7 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { WebsocketService } from '../../../websocket/websocket.service';
 import { Store } from '@ngrx/store';
-import { User, usersListResponse } from '../../models/socket.interface';
+import {
+  User,
+  userExternalLogin,
+  usersListResponse,
+} from '../../models/socket.interface';
 import { usersListActions } from '../../../store/actions/users-list.action';
 import {
   selectActiveUsers,
@@ -56,6 +60,26 @@ export class UsersListComponent {
     );
 
     this.subscriptions.add(
+      this.socketService.onMessage<userExternalLogin>().subscribe((message) => {
+        if (message.type === 'USER_EXTERNAL_LOGIN') {
+          this.store.dispatch(
+            usersListActions.addActiveUser({
+              login: message.payload.user.login,
+            })
+          );
+        }
+        if (message.type === 'USER_EXTERNAL_LOGOUT') {
+          console.log(message);
+          this.store.dispatch(
+            usersListActions.addInactiveUser({
+              login: message.payload.user.login,
+            })
+          );
+        }
+      })
+    );
+
+    this.subscriptions.add(
       this.store.select(selectActiveUsers).subscribe((activeUsers) => {
         this.activeUsers = activeUsers;
       })
@@ -63,6 +87,7 @@ export class UsersListComponent {
 
     this.subscriptions.add(
       this.store.select(selectInactiveUsers).subscribe((inactiveUsers) => {
+        console.log(inactiveUsers);
         this.inactiveUsers = inactiveUsers;
       })
     );

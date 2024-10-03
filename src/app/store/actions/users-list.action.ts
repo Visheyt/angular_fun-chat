@@ -7,5 +7,7 @@ export const usersListActions = createActionGroup({
     activeUsers: props<{ users: User[] }>(),
     inactiveUsers: props<{ users: User[] }>(),
     disconnectUser: props<{ login: string }>(),
+    addActiveUser: props<{ login: string }>(),
+    addInactiveUser: props<{ login: string }>(),
   },
 });
