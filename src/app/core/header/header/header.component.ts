@@ -1,11 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Store } from '@ngrx/store';
-import {
-  selectUser,
-  selectUserName,
-  selectUserStatus,
-} from '../../../store/selectors/user.selector';
+import { selectUser } from '../../../store/selectors/user.selector';
 import { Router, RouterLink } from '@angular/router';
 import { WebsocketService } from '../../../websocket/websocket.service';
 import { userActions } from '../../../store/actions/user.action';

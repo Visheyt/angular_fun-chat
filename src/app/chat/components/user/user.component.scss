@@ -1,14 +1,16 @@
 :host {
   display: flex;
   justify-content: space-between;
-  padding: 5px;
   min-width: 300px;
-  border-bottom: 1px solid rgb(184, 184, 184);
-  border-top: 1px solid rgb(184, 184, 184);
+  border-bottom: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
   border-radius: 2px;
   align-items: center;
   gap: 5px;
   cursor: pointer;
+  padding-block: 7px;
+  padding-inline: 10px;
+  border-collapse: collapse;
 }
 p {
   margin: 0px;
@@ -27,8 +29,9 @@ p {
 }
 .user-icon {
   text-align: center;
-  background-color: rgb(227, 227, 227);
+  background-color: rgb(237, 237, 237);
   border-radius: 50%;
   width: 25px;
   height: 25px;
+  font-weight: 400;
 }
