@@ -13,10 +13,8 @@ import {
 } from '../../../store/selectors/users-list.selector';
 import { Subscription } from 'rxjs';
 import { UserComponent } from '../user/user.component';
-import { userActions } from '../../../store/actions/user.action';
 import { selectUserName } from '../../../store/selectors/user.selector';
 import { chatActions } from '../../../store/actions/chat.action';
-import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-users-list',
@@ -29,8 +27,6 @@ export class UsersListComponent {
   private socketService = inject(WebsocketService);
 
   private store = inject(Store);
-
-  private chatService = inject(ChatService);
 
   protected activeUsers: User[] = [];
 
@@ -69,7 +65,6 @@ export class UsersListComponent {
           );
         }
         if (message.type === 'USER_EXTERNAL_LOGOUT') {
-          console.log(message);
           this.store.dispatch(
             usersListActions.addInactiveUser({
               login: message.payload.user.login,
@@ -106,7 +101,6 @@ export class UsersListComponent {
 
   public openChat(contactName: string, isOnline: boolean) {
     this.store.dispatch(chatActions.open({ contactName, isOnline }));
-    this.chatService.getMessages(contactName);
   }
 
   ngOnDestroy(): void {

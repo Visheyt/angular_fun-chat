@@ -4,6 +4,7 @@ export interface AppState {
   userState: UserState;
   usersListState: UsersListState;
   chatState: ChatState;
+  messagesState: MessagesState;
 }
 
 export interface UserState {
@@ -21,5 +22,13 @@ export interface ChatState {
   isOpen: boolean;
   contactName: string;
   isOnline: boolean;
+}
+
+export interface MessagesState {
+  contacts: Contanct[];
+}
+
+export interface Contanct {
+  contact: string;
   messages: Message[];
 }

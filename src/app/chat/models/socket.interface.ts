@@ -16,6 +16,13 @@ export interface messagesListResponse extends wsResponse {
     messages: Message[];
   };
 }
+
+export interface messageResponse extends wsResponse {
+  payload: {
+    message: Message;
+  };
+}
+
 export interface Message {
   id: string;
   from: string;

@@ -6,6 +6,5 @@ export const chatActions = createActionGroup({
   events: {
     open: props<{ contactName: string; isOnline: boolean }>(),
     close: emptyProps(),
-    addMessages: props<{ messages: Message[] }>(),
   },
 });

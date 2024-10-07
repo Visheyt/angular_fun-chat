@@ -1,4 +1,4 @@
-@let name = userName();
+@let name = contact();
 <div class="user-icon">{{ name[0].toUpperCase() }}</div>
 <p>{{ name }}</p>
 <div class="status" [ngClass]="isLogin() ? 'active' : 'inactive'"></div>

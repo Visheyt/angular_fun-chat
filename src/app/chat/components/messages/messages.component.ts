@@ -11,14 +11,18 @@ import { MatInputModule } from '@angular/material/input';
 import { Store } from '@ngrx/store';
 import { chatActions } from '../../../store/actions/chat.action';
 import { Subscription } from 'rxjs/internal/Subscription';
-import {
-  selectChat,
-  selectMessages,
-} from '../../../store/selectors/chat.selector';
+import { selectChat } from '../../../store/selectors/chat.selector';
 import { ChatService } from '../../services/chat.service';
 import { WebsocketService } from '../../../websocket/websocket.service';
-import { Message, messagesListResponse } from '../../models/socket.interface';
+import {
+  Message,
+  messageResponse,
+  messagesListResponse,
+} from '../../models/socket.interface';
 import { MessageComponent } from '../message/message.component';
+import { selectContactChat } from '../../../store/selectors/messages.selector';
+import { switchMap } from 'rxjs';
+import { messagesActions } from '../../../store/actions/messages.action';
 
 @Component({
   selector: 'app-messages',
@@ -46,7 +50,7 @@ export class MessagesComponent {
 
   private subscription = new Subscription();
 
-  public messages: Message[] = [];
+  public messages: Message[] | undefined = [];
 
   public form = this.fb.group({
     text: ['', Validators.required],
@@ -57,27 +61,35 @@ export class MessagesComponent {
     contactName: '',
     isOnline: false,
   };
-
-  constructor() {
+  ngOnInit(): void {
     this.subscription.add(
-      this.store.select(selectChat).subscribe((chat) => {
-        this.chat = chat;
-      })
+      this.store
+        .select(selectChat)
+        .pipe(
+          switchMap((chat) => {
+            this.chat = chat;
+            return this.store.select(selectContactChat(this.chat.contactName));
+          })
+        )
+        .subscribe((contact) => {
+          const messages = [...contact?.messages!];
+          this.messages = messages?.reverse();
+        })
     );
-    this.subscription.add(
-      this.wsService.onMessage<messagesListResponse>().subscribe((message) => {
-        if (message.type === 'MSG_FROM_USER') {
-          this.store.dispatch(
-            chatActions.addMessages({ messages: message.payload.messages })
-          );
-        }
-      })
-    );
-    this.subscription.add(
-      this.store.select(selectMessages).subscribe((messages) => {
-        this.messages = messages;
-      })
-    );
+    this.wsService.onMessage<messageResponse>().subscribe((message) => {
+      if (
+        message.type === 'MSG_SEND' &&
+        (message.payload.message.from === this.chat.contactName ||
+          message.payload.message.to === this.chat.contactName)
+      ) {
+        this.store.dispatch(
+          messagesActions.addIncomingMessage({
+            contact: this.chat.contactName,
+            message: message.payload.message,
+          })
+        );
+      }
+    });
   }
 
   public closeChat() {

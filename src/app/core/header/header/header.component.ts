@@ -8,6 +8,8 @@ import { userActions } from '../../../store/actions/user.action';
 import { Subscription } from 'rxjs';
 import { userMessageResponse } from '../../../websocket/model/message.interface';
 import { usersListActions } from '../../../store/actions/users-list.action';
+import { chatActions } from '../../../store/actions/chat.action';
+import { messagesActions } from '../../../store/actions/messages.action';
 
 @Component({
   selector: 'app-header',
@@ -55,6 +57,8 @@ export class HeaderComponent {
   }
   public logout() {
     this.socketService.logout(this.user.login, this.user.password);
+    this.store.dispatch(chatActions.close());
+    this.store.dispatch(messagesActions.deleteAllMessages());
     this.router.navigate(['login']);
   }
 

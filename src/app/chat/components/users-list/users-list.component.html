@@ -3,13 +3,13 @@
   @for (item of activeUsers; track $index) { @if(item.login !==
   currentUserName){
   <app-user
-    [userName]="item.login"
+    [contact]="item.login"
     [isLogin]="item.isLogined"
     (click)="openChat(item.login, item.isLogined)"
   ></app-user>
   } } @for (item of inactiveUsers; track $index) {
   <app-user
-    [userName]="item.login"
+    [contact]="item.login"
     [isLogin]="item.isLogined"
     (click)="openChat(item.login, item.isLogined)"
   ></app-user>
