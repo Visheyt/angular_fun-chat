@@ -23,7 +23,7 @@
 }
 .message__status {
   position: absolute;
-  right: 0px;
+  right: 5px;
   bottom: 0px;
 }
 .message__actions {
@@ -32,4 +32,8 @@
 }
 .message__button {
   box-shadow: none;
+}
+.message__more-button {
+  position: absolute;
+  right: 0;
 }

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { WebsocketService } from '../../websocket/websocket.service';
 
 @Injectable({
@@ -7,12 +7,21 @@ import { WebsocketService } from '../../websocket/websocket.service';
 export class ChatService {
   private wsService = inject(WebsocketService);
 
+  public isEdit = signal({ id: '', isEdit: false, text: '' });
+
   public sendMessage(to: string, text: string) {
     this.wsService.sendMessage(to, text);
   }
 
   public getMessages(userName: string) {
-    console.log(userName);
     this.wsService.getMessages(userName);
+  }
+
+  public deleteMessage(messageId: string) {
+    this.wsService.deleteMessage(messageId);
+  }
+
+  public editMessage(text: string) {
+    this.wsService.editMessage(text, this.isEdit().id);
   }
 }

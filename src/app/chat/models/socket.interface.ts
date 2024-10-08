@@ -41,3 +41,23 @@ export interface userExternalLogin extends wsResponse {
     user: User;
   };
 }
+
+export interface messageDeletion extends wsResponse {
+  payload: {
+    message: {
+      id: string;
+    };
+  };
+}
+
+export interface messageEdition extends wsResponse {
+  payload: {
+    message: {
+      id: string;
+      text: string;
+      status: {
+        isEdited: boolean;
+      };
+    };
+  };
+}

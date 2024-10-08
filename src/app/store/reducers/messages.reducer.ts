@@ -21,6 +21,24 @@ export const messagesReducer = createReducer(
     ...state,
     contacts: [],
   })),
+  on(messagesActions.deleteMessage, (state, { id }) => ({
+    ...state,
+    contacts: state.contacts.map((c) => ({
+      contact: c.contact,
+      messages: c.messages.filter((message) => message.id !== id),
+    })),
+  })),
+  on(messagesActions.editMessage, (state, { id, isEdited, text }) => ({
+    ...state,
+    contacts: state.contacts.map((c) => ({
+      ...c,
+      messages: c.messages.map((message) =>
+        message.id === id
+          ? { ...message, text, status: { ...message.status, isEdited } }
+          : message
+      ),
+    })),
+  })),
   on(messagesActions.addIncomingMessage, (state, { contact, message }) => ({
     ...state,
     contacts: state.contacts.map((c) =>

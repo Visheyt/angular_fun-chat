@@ -64,6 +64,28 @@ export class WebsocketService {
     });
     this.socket.next(message);
   }
+
+  public deleteMessage(id: string) {
+    const message = createMessage('MSG_DELETE', {
+      message: {
+        id,
+      },
+    });
+
+    this.socket.next(message);
+  }
+
+  public editMessage(text: string, id: string) {
+    const message = createMessage('MSG_EDIT', {
+      message: {
+        id,
+        text,
+      },
+    });
+
+    this.socket.next(message);
+  }
+
   public onMessage<T>(): Observable<T> {
     return this.socket.asObservable();
   }

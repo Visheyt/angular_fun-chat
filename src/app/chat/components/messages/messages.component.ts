@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, computed, effect, inject, input } from '@angular/core';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
@@ -50,10 +50,18 @@ export class MessagesComponent {
 
   private subscription = new Subscription();
 
+  private isEdit = computed(() => this.chatService.isEdit());
+
   public messages: Message[] | undefined = [];
 
   public form = this.fb.group({
     text: ['', Validators.required],
+  });
+
+  public isEditEffect = effect(() => {
+    if (this.isEdit().isEdit) {
+      this.form.get('text')?.patchValue(this.isEdit().text);
+    }
   });
 
   public chat = {
@@ -61,6 +69,7 @@ export class MessagesComponent {
     contactName: '',
     isOnline: false,
   };
+
   ngOnInit(): void {
     this.subscription.add(
       this.store
@@ -97,10 +106,16 @@ export class MessagesComponent {
   }
 
   public onSubmit() {
-    this.chatService.sendMessage(
-      this.chat.contactName,
-      this.form.getRawValue().text
-    );
+    if (!this.isEdit().isEdit) {
+      this.chatService.sendMessage(
+        this.chat.contactName,
+        this.form.getRawValue().text
+      );
+    } else {
+      this.chatService.editMessage(this.form.getRawValue().text);
+      this.chatService.isEdit.set({ id: '', isEdit: false, text: '' });
+    }
+
     this.form.reset();
   }
 
