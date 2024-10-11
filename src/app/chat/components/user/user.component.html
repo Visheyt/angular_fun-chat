@@ -1,4 +1,11 @@
 @let name = contact();
-<div class="user-icon">{{ name[0].toUpperCase() }}</div>
+<div class="user-icon">
+  <span>{{ name[0].toUpperCase() }}</span>
+  <div class="status" [ngClass]="isLogin() ? 'active' : 'inactive'"></div>
+</div>
 <p>{{ name }}</p>
-<div class="status" [ngClass]="isLogin() ? 'active' : 'inactive'"></div>
+@if (unreadMessages>0) {
+<div class="unread-count">{{ unreadMessages }}</div>
+}@else {
+<div></div>
+}

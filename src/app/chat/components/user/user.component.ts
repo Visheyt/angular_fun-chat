@@ -8,6 +8,7 @@ import { messagesActions } from '../../../store/actions/messages.action';
 import { WebsocketService } from '../../../websocket/websocket.service';
 import { messagesListResponse } from '../../models/socket.interface';
 import { selectUser } from '../../../store/selectors/user.selector';
+import { selectUnreadMessages } from '../../../store/selectors/messages.selector';
 
 @Component({
   selector: 'app-user',
@@ -28,6 +29,8 @@ export class UserComponent {
   public contact = input.required<string>();
 
   public isLogin = input.required<boolean>();
+
+  public unreadMessages = 0;
 
   public currentUser = '';
 
@@ -50,6 +53,14 @@ export class UserComponent {
       this.store.select(selectUser).subscribe((userName) => {
         this.currentUser = userName.login;
       })
+    );
+
+    this.subscription.add(
+      this.store
+        .select(selectUnreadMessages(this.contact(), this.currentUser))
+        .subscribe((messagesCount) => {
+          this.unreadMessages = messagesCount;
+        })
     );
   }
 

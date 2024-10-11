@@ -20,6 +20,9 @@ p {
   height: 5px;
   background: black;
   border-radius: 50%;
+  position: absolute;
+  right: 0;
+  top: 2px;
 }
 .status.active {
   background: greenyellow;
@@ -28,6 +31,7 @@ p {
   background: rgb(255, 47, 47);
 }
 .user-icon {
+  position: relative;
   text-align: center;
   background-color: rgb(237, 237, 237);
   border-radius: 50%;
@@ -35,7 +39,14 @@ p {
   height: 25px;
   font-weight: 400;
 }
-
+.unread-count {
+  text-align: center;
+  background-color: rgb(237, 237, 237);
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-weight: 400;
+}
 @media screen and (width <=768px) {
   .user-icon {
     display: none;

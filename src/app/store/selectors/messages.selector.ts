@@ -10,3 +10,13 @@ export const selectUserMessages = (user: string) =>
       (message) => message.from === user || message.to === user
     );
   });
+
+export const selectUnreadMessages = (contact: string, currentUser: string) =>
+  createSelector(messagesState, (state) => {
+    return state.messages.filter(
+      (message) =>
+        message.from === contact &&
+        message.to === currentUser &&
+        !message.status.isReaded
+    ).length;
+  });
