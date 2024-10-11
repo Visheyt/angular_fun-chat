@@ -1,54 +1,45 @@
 import { createReducer, on } from '@ngrx/store';
-import { ChatState, MessagesState } from '../interfaces/store.interface';
-import { chatActions } from '../actions/chat.action';
+
 import { messagesActions } from '../actions/messages.action';
+import { MessagesState } from '../interfaces/store.interface';
 
 export const initialState: MessagesState = {
-  contacts: [],
+  messages: [],
 };
 
 export const messagesReducer = createReducer(
   initialState,
-  on(messagesActions.addMessages, (state, { contact, messages }) => ({
+  on(messagesActions.addMessages, (state, { messages }) => ({
     ...state,
-    contacts: state.contacts.find((c) => c.contact === contact)
-      ? state.contacts.map((c) =>
-          c.contact === contact ? { ...c, messages } : c
-        )
-      : [...state.contacts, { contact, messages }],
+    messages: [
+      ...state.messages,
+      ...messages.filter(
+        (newMessage) =>
+          !state.messages.some(
+            (existingMessage) => existingMessage.id === newMessage.id
+          )
+      ),
+    ],
   })),
   on(messagesActions.deleteAllMessages, (state) => ({
     ...state,
-    contacts: [],
+    messages: [],
   })),
   on(messagesActions.deleteMessage, (state, { id }) => ({
     ...state,
-    contacts: state.contacts.map((c) => ({
-      contact: c.contact,
-      messages: c.messages.filter((message) => message.id !== id),
-    })),
+    messages: state.messages.filter((message) => message.id !== id),
   })),
   on(messagesActions.editMessage, (state, { id, isEdited, text }) => ({
     ...state,
-    contacts: state.contacts.map((c) => ({
-      ...c,
-      messages: c.messages.map((message) =>
-        message.id === id
-          ? { ...message, text, status: { ...message.status, isEdited } }
-          : message
-      ),
-    })),
-  })),
-  on(messagesActions.addIncomingMessage, (state, { contact, message }) => ({
-    ...state,
-    contacts: state.contacts.map((c) =>
-      c.contact === contact ? { ...c, messages: [...c.messages, message] } : c
+    messages: state.messages.map((message) =>
+      message.id === id
+        ? { ...message, text, status: { ...message.status, isEdited } }
+        : message
     ),
   })),
-  on(messagesActions.addOutgoingMessage, (state, { contact, message }) => ({
+
+  on(messagesActions.addMessage, (state, { message }) => ({
     ...state,
-    contacts: state.contacts.map((c) =>
-      c.contact === contact ? { ...c, messages: [...c.messages, message] } : c
-    ),
+    messages: [...state.messages, message],
   }))
 );

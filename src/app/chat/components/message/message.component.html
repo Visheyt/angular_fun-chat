@@ -1,6 +1,7 @@
 @let msg = message();
 <div [className]="userName === msg.from ? 'sent' : 'received'">
   <mat-card class="message">
+    @if(userName === msg.from ){
     <button
       mat-icon-button
       [matMenuTriggerFor]="menu"
@@ -9,6 +10,7 @@
     >
       <mat-icon>more_horiz</mat-icon>
     </button>
+    }
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="editMessage()">
         <mat-icon>edit</mat-icon>
@@ -26,6 +28,9 @@
       {{ msg.text }}
     </mat-card-content>
     <mat-card-actions class="message__actions">
+      @if(msg.status.isEdited){
+      <span class="message__edited">Edited</span>
+      }
       <div class="message__status">
         @if(userName === msg.from ){
         {{ msg.status.isReaded ? "✓✓" : "✓" }}

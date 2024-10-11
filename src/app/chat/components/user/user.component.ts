@@ -39,7 +39,6 @@ export class UserComponent {
         if (message.type === 'MSG_FROM_USER') {
           this.store.dispatch(
             messagesActions.addMessages({
-              contact: this.contact(),
               messages: message.payload.messages,
             })
           );

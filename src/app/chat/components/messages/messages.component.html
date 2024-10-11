@@ -5,7 +5,11 @@
   <div>{{ chat.isOnline ? "Online " : "Offline" }}</div>
 </header>
 <div class="messages__content">
-  @for (message of messages; track $index) {
+  @if(!messages.length){
+  <div class="messages_empty">
+    <h2>No messages here yet</h2>
+  </div>
+  } @for (message of messages; track $index) {
   <app-message [message]="message" />
   }
 </div>

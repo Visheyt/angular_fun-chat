@@ -82,7 +82,6 @@ export class UsersListComponent {
 
     this.subscriptions.add(
       this.store.select(selectInactiveUsers).subscribe((inactiveUsers) => {
-        console.log(inactiveUsers);
         this.inactiveUsers = inactiveUsers;
       })
     );
@@ -100,6 +99,7 @@ export class UsersListComponent {
   }
 
   public openChat(contactName: string, isOnline: boolean) {
+    this.store.dispatch(chatActions.close());
     this.store.dispatch(chatActions.open({ contactName, isOnline }));
   }
 

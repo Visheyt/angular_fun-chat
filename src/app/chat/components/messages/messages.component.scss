@@ -52,3 +52,20 @@ h6 {
   overflow-y: auto;
   flex-grow: 1;
 }
+.messages_empty {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h2 {
+    font-size: 30px;
+  }
+}
+@media screen and (width <=550px) {
+  :host {
+    display: none;
+  }
+  .messages_empty h2 {
+    font-size: 25px;
+  }
+}

@@ -13,3 +13,11 @@ h5 {
   margin: 0;
   font-size: 30px;
 }
+@media screen and (width <=550px) {
+  h5 {
+    font-size: 25px;
+  }
+  img {
+    width: 80px;
+  }
+}

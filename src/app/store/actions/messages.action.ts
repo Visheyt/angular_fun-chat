@@ -4,11 +4,10 @@ import { Message } from '../../chat/models/socket.interface';
 export const messagesActions = createActionGroup({
   source: 'chat',
   events: {
-    addMessages: props<{ contact: string; messages: Message[] }>(),
+    addMessages: props<{ messages: Message[] }>(),
     deleteAllMessages: emptyProps(),
     deleteMessage: props<{ id: string }>(),
     editMessage: props<{ id: string; text: string; isEdited: boolean }>(),
-    addIncomingMessage: props<{ contact: string; message: Message }>(),
-    addOutgoingMessage: props<{ contact: string; message: Message }>(),
+    addMessage: props<{ message: Message }>(),
   },
 });

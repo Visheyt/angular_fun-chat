@@ -20,7 +20,7 @@ import {
   messagesListResponse,
 } from '../../models/socket.interface';
 import { MessageComponent } from '../message/message.component';
-import { selectContactChat } from '../../../store/selectors/messages.selector';
+import { selectUserMessages } from '../../../store/selectors/messages.selector';
 import { switchMap } from 'rxjs';
 import { messagesActions } from '../../../store/actions/messages.action';
 
@@ -52,7 +52,7 @@ export class MessagesComponent {
 
   private isEdit = computed(() => this.chatService.isEdit());
 
-  public messages: Message[] | undefined = [];
+  public messages: Message[] = [];
 
   public form = this.fb.group({
     text: ['', Validators.required],
@@ -77,28 +77,25 @@ export class MessagesComponent {
         .pipe(
           switchMap((chat) => {
             this.chat = chat;
-            return this.store.select(selectContactChat(this.chat.contactName));
+            return this.store.select(selectUserMessages(this.chat.contactName));
           })
         )
-        .subscribe((contact) => {
-          const messages = [...contact?.messages!];
-          this.messages = messages?.reverse();
+        .subscribe((messages) => {
+          console.log(messages);
+          this.messages = [...messages.reverse()];
         })
     );
-    this.wsService.onMessage<messageResponse>().subscribe((message) => {
-      if (
-        message.type === 'MSG_SEND' &&
-        (message.payload.message.from === this.chat.contactName ||
-          message.payload.message.to === this.chat.contactName)
-      ) {
-        this.store.dispatch(
-          messagesActions.addIncomingMessage({
-            contact: this.chat.contactName,
-            message: message.payload.message,
-          })
-        );
-      }
-    });
+    this.subscription.add(
+      this.wsService.onMessage<messageResponse>().subscribe((message) => {
+        if (message.type === 'MSG_SEND') {
+          this.store.dispatch(
+            messagesActions.addMessage({
+              message: message.payload.message,
+            })
+          );
+        }
+      })
+    );
   }
 
   public closeChat() {

@@ -1,7 +1,7 @@
 :host {
   display: flex;
   justify-content: space-between;
-  min-width: 300px;
+  width: 100%;
   border-bottom: 1px solid var(--border-color);
   border-top: 1px solid var(--border-color);
   border-radius: 2px;
@@ -34,4 +34,15 @@ p {
   width: 25px;
   height: 25px;
   font-weight: 400;
+}
+
+@media screen and (width <=768px) {
+  .user-icon {
+    display: none;
+  }
+}
+@media screen and (width <=550px) {
+  .user-icon {
+    display: block;
+  }
 }

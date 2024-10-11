@@ -9,3 +9,17 @@
   max-height: calc(100vh - 250px);
   height: 100%;
 }
+@media screen and (width <= 550px) {
+  .chat-open {
+    display: flex;
+  }
+  .chat-close {
+    display: none;
+  }
+  .users-open {
+    display: flex;
+  }
+  .users-close {
+    display: none;
+  }
+}

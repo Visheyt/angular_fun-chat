@@ -25,10 +25,5 @@ export interface ChatState {
 }
 
 export interface MessagesState {
-  contacts: Contanct[];
-}
-
-export interface Contanct {
-  contact: string;
   messages: Message[];
 }
