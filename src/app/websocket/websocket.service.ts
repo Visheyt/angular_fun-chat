@@ -86,6 +86,15 @@ export class WebsocketService {
     this.socket.next(message);
   }
 
+  public markAsReaded(id: string) {
+    const message = createMessage('MSG_READ', {
+      message: {
+        id,
+      },
+    });
+    this.socket.next(message);
+  }
+
   public onMessage<T>(): Observable<T> {
     return this.socket.asObservable();
   }

@@ -24,4 +24,8 @@ export class ChatService {
   public editMessage(text: string) {
     this.wsService.editMessage(text, this.isEdit().id);
   }
+
+  public markAsReaded(id: string) {
+    this.wsService.markAsReaded(id);
+  }
 }

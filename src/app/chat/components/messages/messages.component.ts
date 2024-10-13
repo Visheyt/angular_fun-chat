@@ -21,7 +21,7 @@ import {
 } from '../../models/socket.interface';
 import { MessageComponent } from '../message/message.component';
 import { selectUserMessages } from '../../../store/selectors/messages.selector';
-import { switchMap } from 'rxjs';
+import { distinctUntilChanged, switchMap, tap } from 'rxjs';
 import { messagesActions } from '../../../store/actions/messages.action';
 
 @Component({
@@ -81,10 +81,10 @@ export class MessagesComponent {
           })
         )
         .subscribe((messages) => {
-          console.log(messages);
           this.messages = [...messages.reverse()];
         })
     );
+
     this.subscription.add(
       this.wsService.onMessage<messageResponse>().subscribe((message) => {
         if (message.type === 'MSG_SEND') {

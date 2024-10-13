@@ -61,3 +61,14 @@ export interface messageEdition extends wsResponse {
     };
   };
 }
+
+export interface messageReaded extends wsResponse {
+  payload: {
+    message: {
+      id: string;
+      status: {
+        isReaded: boolean;
+      };
+    };
+  };
+}

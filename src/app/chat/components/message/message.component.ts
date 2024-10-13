@@ -3,6 +3,7 @@ import {
   Message,
   messageDeletion,
   messageEdition,
+  messageReaded,
 } from '../../models/socket.interface';
 import { MatCardModule } from '@angular/material/card';
 import { DatePipe } from '@angular/common';
@@ -15,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ChatService } from '../../services/chat.service';
 import { WebsocketService } from '../../../websocket/websocket.service';
 import { messagesActions } from '../../../store/actions/messages.action';
+import { selectChat } from '../../../store/selectors/chat.selector';
 
 @Component({
   selector: 'app-message',
@@ -48,6 +50,7 @@ export class MessageComponent {
         this.userName = userName;
       })
     );
+
     this.subscription.add(
       this.wsService.onMessage<messageDeletion>().subscribe((message) => {
         if (
@@ -73,6 +76,34 @@ export class MessageComponent {
               isEdited: message.payload.message.status.isEdited,
             })
           );
+        }
+      })
+    );
+
+    this.subscription.add(
+      this.wsService.onMessage<messageReaded>().subscribe((message) => {
+        if (
+          message.type === 'MSG_READ' &&
+          message.payload.message.id === this.message().id
+        ) {
+          this.store.dispatch(
+            messagesActions.messageReaded({
+              id: message.payload.message.id,
+              isReaded: message.payload.message.status.isReaded,
+            })
+          );
+        }
+      })
+    );
+
+    this.subscription.add(
+      this.store.select(selectChat).subscribe((chat) => {
+        if (
+          chat.isOpen &&
+          this.message().from === chat.contactName &&
+          !this.message().status.isReaded
+        ) {
+          this.chatService.markAsReaded(this.message().id);
         }
       })
     );

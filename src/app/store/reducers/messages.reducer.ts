@@ -37,7 +37,14 @@ export const messagesReducer = createReducer(
         : message
     ),
   })),
-
+  on(messagesActions.messageReaded, (state, { id, isReaded }) => ({
+    ...state,
+    messages: state.messages.map((message) =>
+      message.id === id
+        ? { ...message, status: { ...message.status, isReaded } }
+        : message
+    ),
+  })),
   on(messagesActions.addMessage, (state, { message }) => ({
     ...state,
     messages: [...state.messages, message],

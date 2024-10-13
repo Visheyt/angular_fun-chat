@@ -8,6 +8,7 @@ export const messagesActions = createActionGroup({
     deleteAllMessages: emptyProps(),
     deleteMessage: props<{ id: string }>(),
     editMessage: props<{ id: string; text: string; isEdited: boolean }>(),
+    messageReaded: props<{ id: string; isReaded: boolean }>(),
     addMessage: props<{ message: Message }>(),
   },
 });
