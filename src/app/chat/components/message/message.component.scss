@@ -43,6 +43,9 @@
   color: rgb(171, 171, 171);
   margin-left: 10px;
 }
+.card__text {
+  word-wrap: break-word;
+}
 @media screen and (width <=550px) {
   .sent {
     width: 60%;

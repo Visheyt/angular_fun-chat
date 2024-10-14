@@ -25,7 +25,7 @@
       {{ msg.datetime | date : "MMM d, h:mm a" }}
     </mat-card-header>
     <mat-card-content>
-      {{ msg.text }}
+      <p class="card__text">{{ msg.text }}</p>
     </mat-card-content>
     <mat-card-actions class="message__actions">
       @if(msg.status.isEdited){

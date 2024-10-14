@@ -47,6 +47,10 @@ p {
   height: 25px;
   font-weight: 400;
 }
+.unread {
+  width: 25px;
+  height: 25px;
+}
 @media screen and (width <=768px) {
   .user-icon {
     display: none;
