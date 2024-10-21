@@ -1,0 +1,63 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+  border-radius: 2px;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding-block: 7px;
+  padding-inline: 10px;
+  border-collapse: collapse;
+}
+p {
+  margin: 0px;
+}
+.status {
+  width: 5px;
+  height: 5px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  top: 2px;
+}
+.status.active {
+  background: greenyellow;
+}
+.status.inactive {
+  background: rgb(255, 47, 47);
+}
+.user-icon {
+  position: relative;
+  text-align: center;
+  background-color: rgb(237, 237, 237);
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-weight: 400;
+}
+.unread-count {
+  text-align: center;
+  background-color: rgb(237, 237, 237);
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-weight: 400;
+}
+.unread {
+  width: 25px;
+  height: 25px;
+}
+@media screen and (width <=768px) {
+  .user-icon {
+    display: none;
+  }
+}
+@media screen and (width <=550px) {
+  .user-icon {
+    display: block;
+  }
+}

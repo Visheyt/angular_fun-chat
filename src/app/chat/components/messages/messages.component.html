@@ -1,0 +1,29 @@
+@if(chat.isOpen){
+<header class="messages__header">
+  <button mat-button (click)="closeChat()">Close</button>
+  <h6>{{ chat.contactName }}</h6>
+  <div>{{ chat.isOnline ? "Online " : "Offline" }}</div>
+</header>
+<div class="messages__content">
+  @if(!messages.length){
+  <div class="messages_empty">
+    <h2>No messages here yet</h2>
+  </div>
+  } @for (message of messages; track $index) {
+  <app-message [message]="message" />
+  }
+</div>
+<form [formGroup]="form" class="messages__form" (submit)="onSubmit()">
+  <input
+    type="text"
+    placeholder="Enter your message"
+    class="message__input"
+    formControlName="text"
+  />
+  <button type="submit" mat-fab class="message__submit">
+    <mat-icon>send</mat-icon>
+  </button>
+</form>
+} @else {
+<h4 class="chat-select">Select a chat to start messaging</h4>
+}

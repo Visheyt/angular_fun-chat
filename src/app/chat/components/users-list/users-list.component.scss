@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-right: 1px solid var(--border-color);
+  padding-top: 15px;
+  align-items: center;
+  min-width: 250px;
+}
+.users {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+@media screen and (width <=768px) {
+  :host {
+    min-width: 30%;
+  }
+  h4 {
+    font-size: 20px;
+  }
+}
+@media screen and (width <=550px) {
+  :host {
+    min-width: 100%;
+  }
+}

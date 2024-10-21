@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+:root {
+  --border-color: rgba(201, 201, 201, 0.564);
+  padding-inline: 15px;
+}

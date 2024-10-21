@@ -1,0 +1,9 @@
+@if(user.isUserLogin){
+<h1>{{ user.login }}</h1>
+<button mat-fab extended class="button" (click)="logout()">Logout</button>
+}@else {
+<h1>Chat</h1>
+<a [routerLink]="['/login']">
+  <button mat-fab extended class="button">Login</button>
+</a>
+}

@@ -1,0 +1,17 @@
+<h4>Contacts</h4>
+<div class="users">
+  @for (item of activeUsers; track $index) { @if(item.login !==
+  currentUserName){
+  <app-user
+    [contact]="item.login"
+    [isLogin]="item.isLogined"
+    (click)="openChat(item.login, item.isLogined)"
+  ></app-user>
+  } } @for (item of inactiveUsers; track $index) {
+  <app-user
+    [contact]="item.login"
+    [isLogin]="item.isLogined"
+    (click)="openChat(item.login, item.isLogined)"
+  ></app-user>
+  }
+</div>

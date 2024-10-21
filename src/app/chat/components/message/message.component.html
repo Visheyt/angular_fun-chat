@@ -1,0 +1,41 @@
+@let msg = message();
+<div [className]="userName === msg.from ? 'sent' : 'received'">
+  <mat-card class="message">
+    @if(userName === msg.from ){
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu"
+      class="message__more-button"
+    >
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+    }
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="editMessage()">
+        <mat-icon>edit</mat-icon>
+        <span>Edit message</span>
+      </button>
+      <button mat-menu-item (click)="deleteMessage()">
+        <mat-icon>delete</mat-icon>
+        <span>Delete message</span>
+      </button>
+    </mat-menu>
+    <mat-card-header class="message__header">
+      {{ msg.datetime | date : "MMM d, h:mm a" }}
+    </mat-card-header>
+    <mat-card-content>
+      <p class="card__text">{{ msg.text }}</p>
+    </mat-card-content>
+    <mat-card-actions class="message__actions">
+      @if(msg.status.isEdited){
+      <span class="message__edited">Edited</span>
+      }
+      <div class="message__status">
+        @if(userName === msg.from ){
+        {{ msg.status.isReaded ? "✓✓" : "✓" }}
+        }
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>
