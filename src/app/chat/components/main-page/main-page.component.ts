@@ -4,6 +4,8 @@ import { MessagesComponent } from '../messages/messages.component';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectChat } from '../../../store/selectors/chat.selector';
+import { NotificationService } from '../../../core/services/notification.service';
+import { WebsocketService } from '../../../websocket/websocket.service';
 
 @Component({
   selector: 'app-main-page',

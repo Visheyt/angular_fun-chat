@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { WebSocketSubject } from 'rxjs/webSocket';
 import { WsMessage } from './model/message.interface';
+import { NotificationService } from '../core/services/notification.service';
 
 function createMessage<T>(type: WsMessage, payload: T) {
   return { id: '', type, payload };
@@ -12,12 +13,19 @@ function createMessage<T>(type: WsMessage, payload: T) {
 export class WebsocketService {
   private socket: WebSocketSubject<any>;
 
+  private notificationService = inject(NotificationService);
+
   constructor() {
     this.socket = new WebSocketSubject('http://localhost:4000');
 
     this.socket.subscribe({
-      next: (message) => console.log('Received:', message),
-      error: (err) => console.error('WebSocket error:', err),
+      next: (msg) => {
+        if (msg.type === 'ERROR') {
+          this.notificationService.showNotification(msg.payload.error);
+        }
+      },
+      error: (err) =>
+        this.notificationService.showNotification(err.payload.error),
       complete: () => console.log('WebSocket connection closed'),
     });
   }

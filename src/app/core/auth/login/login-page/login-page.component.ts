@@ -13,6 +13,7 @@ import { userActions } from '../../../../store/actions/user.action';
 import { userMessageResponse } from '../../../../websocket/model/message.interface';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-login-page',
@@ -32,6 +33,8 @@ export class LoginPageComponent {
 
   private subscriptions = new Subscription();
 
+  private notificationService = inject(NotificationService);
+
   public form = this.fb.group({
     login: ['', Validators.required],
     password: ['', Validators.required],
@@ -48,6 +51,10 @@ export class LoginPageComponent {
             })
           );
           this.router.navigate(['main']);
+
+          this.notificationService.showNotification(
+            'You have successfully logged in.'
+          );
         }
       })
     );
