@@ -13,6 +13,10 @@ h5 {
   margin: 0;
   font-size: 30px;
 }
+a {
+  text-decoration: none;
+  color: black;
+}
 @media screen and (width <=550px) {
   h5 {
     font-size: 25px;
