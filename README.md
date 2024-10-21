@@ -1,31 +1,30 @@
-<<<<<<< HEAD
-# angular_fun-chat
-=======
 # Chat
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+## Deploy
+[Chat](https://visheyt-chat.netlify.app/login)
 
-## Development server
+## Description
+**Chat** - Chat application with webSockets and Angular.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Tech stack
+ - Angular
+ - RxJs
+ - RxJs Websocket
+ - NgRx
+ - SASS (SCSS)
+ - Angular Material
+### Features
+- User Authentication Page
+- Main Page
+- User List
+- Dialogue
+- Messages include the time of sending, sender's username, message delivery status, message text, and indication of whether the message has been edited. A user can edit or remove his message.
+  
+### Setup and Running ⚠️
+- Before using the application, you must clone [the server application](https://github.com/RykovaMariia/fun-chat-server) to your local computer, start the local server, and keep the server application running as needed.
+- Follow the deploy link [Chat](https://visheyt-chat.netlify.app/login)
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
->>>>>>> develop
+## Demo
+![image](https://github.com/user-attachments/assets/07162d2d-4ae9-46a2-8644-6ca5a50511b0)
+![image](https://github.com/user-attachments/assets/0d2fe81d-6dfb-4767-aa10-a463b9ee1631)
+![image](https://github.com/user-attachments/assets/06b001ac-2045-4774-8fbd-b40b35f0bca2)
