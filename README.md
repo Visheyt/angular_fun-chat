@@ -21,7 +21,7 @@
 - Messages include the time of sending, sender's username, message delivery status, message text, and indication of whether the message has been edited. A user can edit or remove his message.
   
 ### Setup and Running ⚠️
-- Before using the application, you must clone [the server application](https://github.com/RykovaMariia/fun-chat-server) to your local computer, start the local server, and keep the server application running as needed.
+- Before using the application, you must clone [the server application](https://github.com/Visheyt/fun-chat-server) to your local computer, start the local server, and keep the server application running as needed.
 - Follow the deploy link [Chat](https://visheyt-chat.netlify.app/login)
 
 ## Demo
